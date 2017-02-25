@@ -6,6 +6,7 @@ Parse.Cloud.define('hello', function(req, res) {
 Parse.Cloud.define("arrival", function(request, response) {
   var query = new Parse.Query("checkin");
   query.equalTo("phase", request.params.movie);
+  query.equalTo("username", request.params.user);
   query.find({
     success: function(results) {
       var sum = 0;
