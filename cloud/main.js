@@ -11,7 +11,9 @@ Parse.Cloud.define("arrival", function(request, response) {
     success: function(results) {
       var sum = 0;
       for (var i = 0; i < results.length; ++i) {
-        sum ++;
+        // for each object we find
+        results.set("phase", "WRITTEN");
+        results.save();
       }
       response.success(results.length);
     },
