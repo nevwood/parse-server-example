@@ -7,7 +7,7 @@ Parse.Cloud.define("arrival", function(request, response) {
  //  console.log('start of code');
   var record = Parse.Object.extend("checkin");
   var query = new Parse.Query(record);
-  query.equalTo("phase", request.params.movie);
+  query.equalTo("phase", request.params.status);
   query.equalTo("username", request.params.user);
   query.each(function (object) {
 //    useMasterKey: true, 
@@ -18,8 +18,8 @@ Parse.Cloud.define("arrival", function(request, response) {
         object.set("phase", "WRITTEN");
         object.save({ useMasterKey: true });
     }).then(function (success) {
-        request.success(22);
+        response.success(22);
     }, function(err) {
-        request.error(err);
+        response.error(err);
     });
 });
