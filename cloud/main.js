@@ -16,6 +16,7 @@ Parse.Cloud.define("arrival", function(request, response) {
 //      for (var i = 0; i < results.length; ++i) {
         // for each object we find
         object.set("phase", "WRITTEN");
+        object.set("out", request.params.out);
         object.save({ useMasterKey: true });
     }).then(function (success) {
         response.success(22);
