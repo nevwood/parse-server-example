@@ -7,16 +7,16 @@ Parse.Cloud.define("arrival", function(request, response) {
   var query = new Parse.Query("checkin");
   query.equalTo("phase", request.params.movie);
   query.equalTo("username", request.params.user);
-  query.find({
+  query.first({
     useMasterKey: true, 
-    success: function(results) {
-      var sum = 0;
-      for (var i = 0; i < results.length; ++i) {
+    success: function(object) {
+//      var sum = 0;
+//      for (var i = 0; i < results.length; ++i) {
         // for each object we find
-        results.set("phase", "WRITTEN");
-        results.save({ useMasterKey: true });
-      }
-      response.success(results.length);
+        object.set("phase", "WRITTEN");
+        object.save({ useMasterKey: true });
+//      }
+      response.success(object.length);
     },
     error: function() {
       response.error("failed");
