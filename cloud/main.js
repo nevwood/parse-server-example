@@ -44,7 +44,26 @@ Parse.Cloud.define("arrival", function(request, response) {
         record.save({ useMasterKey: true });
 });
 
-  
+  Parse.Cloud.define("firstrun", function(request, response) {
+  Parse.Cloud.useMasterKey();
+  var record = Parse.Object.extend("checkin");
+  var query2 = new Parse.Query(record);
+    
+  // run query to find all other records
+  query2.equalTo("phase", request.params.phase);
+  query2.equalTo("username", request.params.user);
+  query2.each(function (object2) {
+        object2.set("phase", "COMPLETE");
+        object2.set("status", "FIRST-RUN");
+        object2.set("out", request.params.out);
+        object2.save({ useMasterKey: true });
+
+    }).then(function (success) {
+        response.success(99);
+    }, function(err) {
+        response.error(err);
+    });
+});
   
   
   
