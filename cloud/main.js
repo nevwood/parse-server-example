@@ -4,7 +4,8 @@ Parse.Cloud.define('hello', function(req, res) {
 });
 
 Parse.Cloud.define("arrival", function(request, response) {
-  var query = new Parse.Query("checkin");
+  var record = Parse.Object.extend("checkin");
+  var query = new Parse.Query(record);
   query.equalTo("phase", request.params.movie);
   query.equalTo("username", request.params.user);
   query.first({
