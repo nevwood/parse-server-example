@@ -32,7 +32,7 @@ Parse.Cloud.define("arrival", function(request, response) {
         record.set("in", request.params.in);
         record.set("out", request.params.out);
         record.set("phase", "INSITU");
-        record.set("status", request.params.status);
+        record.set("status", "ARRIVAL-STANDARD");
         record.set("usersagepref", request.params.usersagepref);
         record.set("ageprefs", request.params.ageprefs);
         record.set("gendercode", request.params.gendercode);
@@ -69,7 +69,7 @@ Parse.Cloud.define("cleanup", function(request, response) {
 //  query3.greaterThan("in", request.params.in);
   query3.each(function (object3) {
         object3.set("phase", "COMPLETE");
-        object3.set("status", "FIRST-RUN");
+        object3.set("status", "ARRIVAL-CLEAN");
         object3.set("out", request.params.in);
         object3.save({ useMasterKey: true });
     }).then(function (success) {
