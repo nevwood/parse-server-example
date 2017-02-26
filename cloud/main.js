@@ -3,13 +3,10 @@ Parse.Cloud.define('hello', function(req, res) {
   res.success('Hello!');
 });
 
-
 Parse.Cloud.define("departure", function(request, response) {
   Parse.Cloud.useMasterKey();
   var record = Parse.Object.extend("checkin");
   var query = new Parse.Query(record);
-//  var query2 = new Parse.Query(record);
-  
   // run query to find specific record
   query.equalTo("phase", request.params.phase);
   query.equalTo("username", request.params.user);
@@ -19,14 +16,12 @@ Parse.Cloud.define("departure", function(request, response) {
         object.set("status", "DEP-STANDARD");
         object.set("out", request.params.out);
         object.save({ useMasterKey: true });
-
     }).then(function (success) {
         response.success(99);
     }, function(err) {
         response.error(err);
     });
 });
-
 
 Parse.Cloud.define("arrival", function(request, response) {
   Parse.Cloud.useMasterKey();
@@ -46,9 +41,8 @@ Parse.Cloud.define("arrival", function(request, response) {
 
   Parse.Cloud.define("firstrun", function(request, response) {
   Parse.Cloud.useMasterKey();
-  var record = Parse.Object.extend("checkin");
-  var query2 = new Parse.Query(record);
-    
+  var record2 = Parse.Object.extend("checkin");
+  var query2 = new Parse.Query(record2);   
   // run query to find all other records
   query2.equalTo("phase", request.params.phase);
   query2.equalTo("username", request.params.user);
@@ -57,14 +51,37 @@ Parse.Cloud.define("arrival", function(request, response) {
         object2.set("status", "FIRST-RUN");
         object2.set("out", request.params.out);
         object2.save({ useMasterKey: true });
-
     }).then(function (success) {
         response.success(99);
     }, function(err) {
         response.error(err);
     });
 });
+ 
+Parse.Cloud.define("cleanup", function(request, response) {
+  Parse.Cloud.useMasterKey();
+  var record3 = Parse.Object.extend("checkin");
+  var query3 = new Parse.Query(record3);    
+  // run query to find all other records
+  query3.equalTo("phase", "INSITU");
+  query3.equalTo("username", request.params.user);
+  query3.lessThan("in", request.params.in);
+  query3.greaterThan("in", request.params.in);
+  query3.each(function (object3) {
+        object3.set("phase", "COMPLETE");
+        object3.set("status", "FIRST-RUN");
+        object3.set("out", request.params.out);
+        object3.save({ useMasterKey: true });
+    }).then(function (success) {
+        response.success(99);
+    }, function(err) {
+        response.error(err);
+    });
   
+  
+  
+  
+});
   
   
   
