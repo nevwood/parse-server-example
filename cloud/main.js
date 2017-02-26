@@ -19,7 +19,7 @@ Parse.Cloud.define("departure", function(request, response) {
         object.set("out", request.params.out);
         object.save({ useMasterKey: true });
     }).then(function (success) {
-        response.success(22);
+        response.success(99);
     }, function(err) {
         response.error(err);
     });
@@ -39,6 +39,6 @@ Parse.Cloud.define("arrival", function(request, response) {
         record.set("ageprefs", request.params.ageprefs);
         record.set("gendercode", request.params.gendercode);
         record.save({ useMasterKey: true });
-    response.success('record created');
-    response.error('error');
+    response.success(100);
+    response.error(01);
 });
