@@ -26,8 +26,9 @@ Parse.Cloud.define("departure", function(request, response) {
 });
 
 Parse.Cloud.define("arrival", function(request, response) {
- //  console.log('start of code');
-  var record = Parse.Object.extend("checkin");
+  Parse.Cloud.useMasterKey();
+  // var record = Parse.Object.extend("checkin");
+  var record = new Parse.Object("checkin");
         record.set("username", request.params.username);
         record.set("checkin", request.params.checkin);
         record.set("in", request.params.in);
