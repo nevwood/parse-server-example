@@ -4,11 +4,12 @@ Parse.Cloud.define('hello', function(req, res) {
 });
 
 Parse.Cloud.define("arrival", function(request, response) {
+  console.log('start of code');
   var record = Parse.Object.extend("checkin");
   var query = new Parse.Query(record);
   query.equalTo("phase", request.params.movie);
   query.equalTo("username", request.params.user);
-  query.each({
+  query.first({
     useMasterKey: true, 
     success: function(object) {
 //      var sum = 0;
@@ -18,9 +19,11 @@ Parse.Cloud.define("arrival", function(request, response) {
         object.save({ useMasterKey: true });
 //      }
       response.success(object.length);
+      console.log('success of code');
     },
     error: function() {
       response.error("failed");
+      console.log('failure of code');
     }
   });
 });
