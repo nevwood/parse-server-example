@@ -70,7 +70,7 @@ Parse.Cloud.define("cleanup", function(request, response) {
   query3.each(function (object3) {
         object3.set("phase", "COMPLETE");
         object3.set("status", "FIRST-RUN");
-        object3.set("out", request.params.out);
+        object3.set("out", request.params.in);
         object3.save({ useMasterKey: true });
     }).then(function (success) {
         response.success(99);
