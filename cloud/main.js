@@ -66,7 +66,7 @@ Parse.Cloud.define("cleanup", function(request, response) {
   query3.equalTo("phase", "INSITU");
   query3.equalTo("username", request.params.user);
   query3.lessThan("in", request.params.in);
-  query3.greaterThan("in", request.params.in);
+//  query3.greaterThan("in", request.params.in);
   query3.each(function (object3) {
         object3.set("phase", "COMPLETE");
         object3.set("status", "FIRST-RUN");
