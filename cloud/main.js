@@ -9,7 +9,7 @@ Parse.Cloud.define("arrival", function(request, response) {
   var query = new Parse.Query(record);
   query.equalTo("phase", request.params.movie);
   query.equalTo("username", request.params.user);
-  query.first({
+  query.each(function (object) {
     useMasterKey: true, 
     success: function(object) {
 //      var sum = 0;
@@ -17,6 +17,12 @@ Parse.Cloud.define("arrival", function(request, response) {
         // for each object we find
         object.set("phase", "WRITTEN");
         object.save({ useMasterKey: true });
+
+      
+      
+      
+      
+      
 //      }
       response.success(object.length);
       console.log('success of code');
