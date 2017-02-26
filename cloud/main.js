@@ -28,6 +28,22 @@ Parse.Cloud.define("departure", function(request, response) {
 });
 
 
+Parse.Cloud.define("arrival", function(request, response) {
+  Parse.Cloud.useMasterKey();
+  // var record = Parse.Object.extend("checkin");
+  var record = new Parse.Object("checkin");
+        record.set("username", request.params.username);
+        record.set("checkin", request.params.checkin);
+        record.set("in", request.params.in);
+        record.set("out", request.params.out);
+        record.set("phase", "INSITU");
+        record.set("status", request.params.status);
+        record.set("usersagepref", request.params.usersagepref);
+        record.set("ageprefs", request.params.ageprefs);
+        record.set("gendercode", request.params.gendercode);
+        record.save({ useMasterKey: true });
+});
+
   
   
   
