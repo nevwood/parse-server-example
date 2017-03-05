@@ -95,8 +95,6 @@ Parse.Cloud.define("cleanup", function(request, response) {
     }, function(err) {
         response.error(err);
     });
-
-});
   
   
   
