@@ -36,7 +36,23 @@ Parse.Cloud.define("userLeave", function(request, response) {
         response.error(err);
     });
 });
-  
+
+
+Parse.Cloud.define('updateNearbyUser', function(request, response) {
+    Parse.Cloud.useMasterKey();
+    var userId = request.params.userId;
+    var uniqueNuurdleId = request.params.uniqueNuurdleId;
+
+    var query = new Parse.Query(Parse.User);
+    query.get(userId).then(function(user) {
+        user.addUnique("nearbyNuurdles", uniqueNuurdleId);
+        return user.save(null, {useMasterKey:true});
+    }).then(function(user) {
+        response.success(user);
+    }, function(error) {
+        response.error(error);
+    });
+});
   
   
   
