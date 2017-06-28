@@ -51,6 +51,20 @@ Parse.Cloud.define('updateNearbyUser', function(request, response) {
         response.error(err);
     });
 });
+
+Parse.Cloud.define('resetPassword', function(request, response) {
+    Parse.Cloud.useMasterKey();
+    var query = new Parse.Query(Parse.User);
+    query.equalTo("username", request.params.userId);
+    query.each(function (object) {
+      user.setPassword(request.params.newEntry);
+      return user.save(null, { useMasterKey: true });
+    }).then(function (success) {
+        response.success(5150);
+    }, function(err) {
+        response.error(err);
+    });
+});
   
   
   
