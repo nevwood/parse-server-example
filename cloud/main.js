@@ -55,7 +55,7 @@ Parse.Cloud.define('updateNearbyUser', function(request, response) {
 
 Parse.Cloud.define('resetPassword', function(request, response) {
     Parse.Cloud.useMasterKey();
-    var query = new Parse.Query(Parse.User);
+    var query = new Parse.Query("_User");
     query.equalTo("username", request.params.userId, { useMasterKey: true });
     query.each(function (object) {
       user.setPassword(request.params.newPassword);
