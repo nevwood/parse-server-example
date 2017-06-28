@@ -67,9 +67,6 @@ Parse.Cloud.define('resetPassword', function(request, response) {
         // response.error(err);
     });
 });
-
-
-query.get(request.params.userId, { useMasterKey: true }).then((user) {
   
   
   
