@@ -66,7 +66,7 @@ updateQuery.equalTo("objectId", userId);
 updateQuery.first({
     success: function(userRecord){          
         // userRecord.set("username", userName);
-        userRecord.set("password", newPassword);          
+        userRecord.setPassword(request.params.newPassword);        
         userRecord.save(null,{
             success: function(successData){                 
                 response.success("password updated successfully.");
