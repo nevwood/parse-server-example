@@ -51,7 +51,6 @@ Parse.Cloud.define('updateNearbyUser', function(request, response) {
         response.error(err);
     });
 });
-
   
   
   
