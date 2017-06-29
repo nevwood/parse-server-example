@@ -54,15 +54,29 @@ Parse.Cloud.define('updateNearbyUser', function(request, response) {
 
 
 Parse.Cloud.define('resetPassword', function(request, response) {
-  var query = new Parse.Query("_User");
-  query.get(request.params.userId, { useMasterKey: true }).then((user) {
-    user.setPassword(request.params.newPassword);
-    return user.save(null, { useMasterKey: true });
-  }).then((user) => {
-    response.success(JSON.stringify(user));
-  }, (obj, error) => { 
-    response.error(error.message);
-  });
+    Parse.Cloud.useMasterKey();
+    query.equalTo("username", request.params.userId);
+    query.first({
+      success: function(theUser){
+          var newPassword = request.params.newPassword;
+          console.log("New Password: " + newPassword);
+          console.log("set: " + theUser.set("password", newPassword));
+          console.log("setPassword: " + theUser.setPassword(newPassword));
+
+       theUser.save(null,{
+            success: function(theUser){
+                // The user was saved correctly
+                res.success(1);
+
+            },
+            error: function(SMLogin, error){
+                res.error("error message");
+            }
+        });
+    },
+    error: function(error){
+        res.error("error and stuff" + error);
+    }
 });
 
   
