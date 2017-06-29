@@ -56,7 +56,7 @@ Parse.Cloud.define('updateNearbyUser', function(request, response) {
 Parse.Cloud.define('resetPassword', function(request, response) {
 if(!request.user){
     response.error("Must be signed in to update the user");
-    return;
+    // return;
 }
 if(request.params.IsAdmin == false){
     response.error("Only the administrators can edit username.");
