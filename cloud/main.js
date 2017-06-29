@@ -54,29 +54,36 @@ Parse.Cloud.define('updateNearbyUser', function(request, response) {
 
 
 Parse.Cloud.define('resetPassword', function(request, response) {
-    Parse.Cloud.useMasterKey();
-    query.equalTo("username", request.params.userId);
-    query.first({
-      success: function(theUser){
-          var newPassword = request.params.newPassword;
-          console.log("New Password: " + newPassword);
-          console.log("set: " + theUser.set("password", newPassword));
-          console.log("setPassword: " + theUser.setPassword(newPassword));
-
-       theUser.save(null,{
-            success: function(theUser){
-                // The user was saved correctly
-                res.success(1);
-
+Parse.Cloud.useMasterKey();
+// var userId = request.params.Id; --> I guess he was the main culprit,  the params and the actual column value should match. Instead of passing Id from my client code(see below) I just passed objectId and it worked.
+var userId = request.params.userId;
+// var userName = request.params.username;  
+var newPassword = request.params.newPassword;
+// var User = Parse.Object.extend("User");
+var updateQuery =  new Parse.Query(Parse.User); 
+console.log("id from params: "+userId);
+updateQuery.equalTo("objectId", userId);
+updateQuery.first({
+    success: function(userRecord){          
+        // userRecord.set("username", userName);
+        userRecord.set("password", newPassword);          
+        userRecord.save(null,{
+            success: function(successData){                 
+                response.success("password updated successfully.");
+                userRecord.fetch();                 
             },
-            error: function(SMLogin, error){
-                res.error("error message");
+            error: function(errorData){
+                console.log("Error while updating the username: ",errorData);
+
             }
-        });
+        });         
+
     },
-    error: function(error){
-        res.error("error and stuff" + error);
+    error: function(errorData){
+        console.log("Error: ",errorData);
+        response.error(errorData);
     }
+});
 });
 
   
