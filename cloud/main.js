@@ -77,8 +77,7 @@ updateQuery.first({
         userRecord.setPassword(request.params.newPassword);           
         userRecord.save(null,{
             success: function(successData){   
-                console.log("success");
-                response.success("username updated successfully.");
+                response.success(101);
                 userRecord.fetch();                 
             },
             error: function(errorData){
