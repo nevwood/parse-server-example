@@ -70,7 +70,7 @@ var newPassword = request.params.newPassword;
 // var User = Parse.Object.extend("User");
 var updateQuery =  new Parse.Query(Parse.User); 
 // console.log("id from params: "+userId);
-updateQuery.equalTo("security", userId);
+updateQuery.equalTo("username", userId);
 updateQuery.first({
     success: function(userRecord){          
         // userRecord.set("username", userName);
