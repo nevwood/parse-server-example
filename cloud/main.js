@@ -54,14 +54,14 @@ Parse.Cloud.define('updateNearbyUser', function(request, response) {
 
 
 Parse.Cloud.define('resetPassword', function(request, response) {
-if(!request.user){
-    response.error("Must be signed in to update the user");
+// if(!request.user){
+//    response.error("Must be signed in to update the user");
     // return;
-}
-if(request.params.IsAdmin == false){
-    response.error("Only the administrators can edit username.");
-    return; 
-}
+// }
+// if(request.params.IsAdmin == false){
+//    response.error("Only the administrators can edit username.");
+//    return; 
+// }
 Parse.Cloud.useMasterKey();
 // var userId = request.params.Id; --> I guess he was the main culprit,  the params and the actual column value should match. Instead of passing Id from my client code(see below) I just passed objectId and it worked.
 var userId = request.params.userId;
@@ -69,7 +69,7 @@ var userId = request.params.userId;
 var newPassword = request.params.newPassword;
 // var User = Parse.Object.extend("User");
 var updateQuery =  new Parse.Query(Parse.User); 
-console.log("id from params: "+userId);
+// console.log("id from params: "+userId);
 updateQuery.equalTo("username", userId);
 updateQuery.first({
     success: function(userRecord){          
@@ -77,7 +77,7 @@ updateQuery.first({
         userRecord.setPassword(request.params.newPassword);           
         userRecord.save(null,{
             success: function(successData){   
-                response.success(101);
+                response.success("hello");
                 userRecord.fetch();                 
             },
             error: function(errorData){
